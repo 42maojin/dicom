@@ -27,12 +27,12 @@ import (
 	"io"
 	"os"
 
-	"github.com/suyashkumar/dicom/pkg/charset"
-	"github.com/suyashkumar/dicom/pkg/debug"
-	"github.com/suyashkumar/dicom/pkg/dicomio"
-	"github.com/suyashkumar/dicom/pkg/frame"
-	"github.com/suyashkumar/dicom/pkg/tag"
-	"github.com/suyashkumar/dicom/pkg/uid"
+	"github.com/42maojin/dicom/pkg/charset"
+	"github.com/42maojin/dicom/pkg/debug"
+	"github.com/42maojin/dicom/pkg/dicomio"
+	"github.com/42maojin/dicom/pkg/frame"
+	"github.com/42maojin/dicom/pkg/tag"
+	"github.com/42maojin/dicom/pkg/uid"
 )
 
 const (
@@ -149,7 +149,7 @@ func NewParser(in io.Reader, bytesToRead int64, frameChannel chan *frame.Frame, 
 
 	p.dataset = Dataset{Elements: elems}
 
-	// TODO(suyashkumar): avoid storing the metadata pointers twice (though not that expensive)
+	// TODO(42maojin): avoid storing the metadata pointers twice (though not that expensive)
 	p.metadata = Dataset{Elements: elems}
 
 	// Determine and set the transfer syntax based on the metadata elements parsed so far.
@@ -163,7 +163,7 @@ func NewParser(in io.Reader, bytesToRead int64, frameChannel chan *frame.Frame, 
 	} else {
 		bo, implicit, err = uid.ParseTransferSyntaxUID(MustGetStrings(ts.Value)[0])
 		if err != nil {
-			// TODO(suyashkumar): should we attempt to parse with LittleEndian
+			// TODO(42maojin): should we attempt to parse with LittleEndian
 			// Implicit here?
 			debug.Log("WARN: could not parse transfer syntax uid in metadata")
 		}
@@ -281,8 +281,8 @@ func SkipPixelData() ParseOption {
 // a PixelData element will be added to the dataset with the
 // PixelDataInfo.IntentionallyUnprocessed = true, and the raw bytes of the
 // entire PixelData element stored in PixelDataInfo.UnprocessedValueData.
-// 
-// In the future, we may be able to extend this functionality to support 
+//
+// In the future, we may be able to extend this functionality to support
 // on-demand processing of elements elsewhere in the library.
 func SkipProcessingPixelDataValue() ParseOption {
 	return func(set *parseOptSet) {

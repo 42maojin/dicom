@@ -11,12 +11,12 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/suyashkumar/dicom/pkg/debug"
-	"github.com/suyashkumar/dicom/pkg/vrraw"
+	"github.com/42maojin/dicom/pkg/debug"
+	"github.com/42maojin/dicom/pkg/vrraw"
 
-	"github.com/suyashkumar/dicom/pkg/dicomio"
-	"github.com/suyashkumar/dicom/pkg/frame"
-	"github.com/suyashkumar/dicom/pkg/tag"
+	"github.com/42maojin/dicom/pkg/dicomio"
+	"github.com/42maojin/dicom/pkg/frame"
+	"github.com/42maojin/dicom/pkg/tag"
 )
 
 var (
@@ -35,7 +35,7 @@ var (
 
 // reader is responsible for mid-level dicom parsing capabilities, like
 // reading tags, VRs, and elements from the low-level dicomio.Reader dicom data.
-// TODO(suyashkumar): consider revisiting naming of this struct "reader" as it
+// TODO(42maojin): consider revisiting naming of this struct "reader" as it
 // interplays with the rawReader dicomio.Reader. We could consider combining
 // them, or embedding the dicomio.Reader struct into reader.
 type reader struct {
@@ -653,7 +653,7 @@ func (r *reader) readFloat(t tag.Tag, vr string, vl uint32) (Value, error) {
 			if err != nil {
 				return nil, err
 			}
-			// TODO(suyashkumar): revisit this hack to prevent some internal representation issues upconverting from
+			// TODO(42maojin): revisit this hack to prevent some internal representation issues upconverting from
 			// float32 to float64. There is no loss of precision, but the value gets some additional significant digits
 			// when using golang casting. This approach prevents those artifacts, but is less efficient.
 			pval, err := strconv.ParseFloat(fmt.Sprint(val), 64)
